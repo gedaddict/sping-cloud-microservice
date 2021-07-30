@@ -56,8 +56,7 @@ public class WeatherCatalogueController {
 			weather = weatherCatalogueService.getLocalWeather(aCode);
 			return new WeatherCatalogue(aCode, weather);
 			};
-		Thread.sleep(3000);
-		log.info("WeatherCatalogue completed: " +Thread.currentThread().getName());
+		
 		return localArea.getLocalAreaCodeDetails()
 					.stream()
 					.map(weatherCatalogueBuilder)
