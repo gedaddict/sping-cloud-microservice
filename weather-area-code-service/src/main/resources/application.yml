@@ -1,10 +1,15 @@
-server.port: 8082
-spring.application.name: weather-area-code-service
+config:
+   uri: http:localhost:8888/
 
-my_app_weather:
-   services:
-      localAreaCode: https://app.zipcodebase.com/api/v1/search?apikey=
-      apiKey: 767d3e90-d1ad-11eb-853a-739249c7a2ce
-      #countryCode: US
+spring:
+   application:
+      name: weather-area-code-service
+   cloud:
+      import: optional:configserver:${config.uri}
 
-#https://app.zipcodebase.com/api/v1/search?apikey=767d3e90-d1ad-11eb-853a-739249c7a2ce&codes=10005&country=us
+management:
+   endpoints:
+      web:
+         exposure:
+            include: "*"
+      

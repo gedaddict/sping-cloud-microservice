@@ -1,8 +1,14 @@
-server.port: 8083
-spring.application.name: weather-service
+config:
+   uri: http:localhost:8888/
 
-my_app_weather:
-   services:
-      localweather: https://api.openweathermap.org/data/2.5/weather?q=
-      apiKey: bcb6eaaccc6eca553b655050ec70c845
-#api.openweathermap.org/data/2.5/weather?q={city name}&appid={API key}
+spring:
+   application:
+      name: weather-service
+   cloud:
+      import: optional:configserver:${config.uri}
+
+management:
+   endpoints:
+      web:
+         exposure:
+            include: "*"

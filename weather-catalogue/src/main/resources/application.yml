@@ -1,38 +1,14 @@
-server:
-  port: 8081
+config:
+   uri: http://localhost:8888/
 
-spring.application.name: weather-catalogue
-
-my_app_weather:
-   host: LAPTOP-M1230BFO
-   services:
-      #areacode: ${my_app_weather.host}:8082/areacode/
-      #localweather: ${my_app_weather.host}:8083/localweather/
-      areacode: http://weather-area-code-service/areacode/
-      localweather: http://weather-service/localweather/
-      apiKey: bcb6eaaccc6eca553b655050ec70c845
-#api.openweathermap.org/data/2.5/weather?q={city name}&appid={API key}
-
-resilience4j.circuitbreaker:
-    instances:
-        weather-service:
-            registerHealthIndicator: true
-            slidingWindowSize: 10
-            permittedNumberOfCallsInHalfOpenState: 3
-            slidingWindowType: TIME_BASED
-            minimumNumberOfCalls: 2
-            automaticTransitionFromOpenToHalfOpenEnabled: true
-            waitDurationInOpenState: 5s
-            failureRateThreshold: 50
-            eventConsumerBufferSize: 10
-   
-        weather-area-code-service:
-            registerHealthIndicator: true
-            slidingWindowSize: 10
-            permittedNumberOfCallsInHalfOpenState: 3
-            slidingWindowType: TIME_BASED
-            minimumNumberOfCalls: 2
-            automaticTransitionFromOpenToHalfOpenEnabled: true
-            waitDurationInOpenState: 5s
-            failureRateThreshold: 50
-            eventConsumerBufferSize: 10
+spring:
+   application:
+      name: weather-catalogue
+   config:
+      import: optional:configserver:${config.uri}
+    
+management:
+   endpoints:
+      web:
+         exposure:
+            include: "*"
